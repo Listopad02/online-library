@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Root } from "./pages/Root"
 import { Route, Routes } from "react-router"
+import 'antd/dist/reset.css';
 
 enum Links {
   Books = "/books",
