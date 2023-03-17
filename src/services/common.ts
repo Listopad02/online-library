@@ -1,32 +1,22 @@
-// const BASE_URL = "/api/"
+import axios, { AxiosResponse, AxiosInstance } from "axios";
 
-// export type Header = {
-//     "Content-Type": string
-// }
+const BASE_URL = "/api/"
 
-// /**
-//  * Создать http запрос с параметрами
-//  */
-// export const authHttp = (contentType?: string): AxiosInstance => {
-//     let headers: Header = {
-//         "Content-Type": contentType,
-//     }
+/**
+ * Создать http запрос с параметрами
+ */
+export const authHttp = (contentType?: string): AxiosInstance => {
 
-//     const ax = axios.create({
-//         baseURL: BASE_URL,
-//         headers,
-//     })
+    const ax = axios.create({
+        baseURL: BASE_URL,
+    })
 
-//     return ax
-// }
+    return ax
+}
 
-// /** Вызвать get метод API. */
-// export const queryGet = <R extends unknown>(
-//     method: string,
-//     args?: unknown
-// ): Promise<AxiosResponse<R>> =>
-//     authHttp(contentType).get(method, { params: args })
-
-
-// temp
-export {}
+/** Вызвать get метод API. */
+export const queryGet = <R extends unknown>(
+    method: string,
+    args?: unknown
+): Promise<AxiosResponse<R>> =>
+    authHttp().get(method, { params: args })

@@ -8,6 +8,7 @@ export const Root = ({ children }: RootProps) => {
   return (
 		<>
 			<Header />
+			{/* <Cards /> */}
 
 			{ children }
 		</>

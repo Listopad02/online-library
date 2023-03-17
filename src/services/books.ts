@@ -1,13 +1,14 @@
-// // Всякие параметры типо сортировки для запроса
-// export type GetQueryOptions = {
-//     $orderby?: string
-// }
-
-// /** Получить книги */
-// export const getBooks = (
-//     query?: GetQueryOptions
-// ): Promise<AxiosResponse<Сюда что получаешь в ответе>> => queryGet(`api`, query)
+import { queryGet } from "./common"
+import { AxiosResponse } from "axios";
 
 
-// temp
-export {}
+export type GetQueryOptions = {
+    $orderby?: string,
+    maxResults: number,
+    key: string,
+    q: string
+}
+
+export const getBooks = (
+    query?: GetQueryOptions
+): Promise<AxiosResponse<any>> => queryGet(`https://www.googleapis.com/books/v1/volumes`, query)

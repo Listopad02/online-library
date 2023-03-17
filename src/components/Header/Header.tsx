@@ -1,10 +1,14 @@
 import { FC } from 'react'
 import { Input, Select } from 'antd';
+import { getBooks } from '../../services/books';
 import "./Header.scss"
 
 const Header: FC = () => {
-  const { Search } = Input;
-  const handleSearch = (value: string) => console.log(value);
+  const { Search } = Input
+  const handleSearch = (value: string) => {
+    getBooks({ q: value, maxResults: 30, key: 'AIzaSyDYSwzuICwD2H47mJrPOAmC5rby3aX2h14' })
+      .then(response => console.log(response.data))
+  }
 
   return (
     <div className='header'>
