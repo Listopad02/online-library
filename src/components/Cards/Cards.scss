@@ -1,5 +1,10 @@
-.cards__row {
+h2 {
+    text-align: center;
     padding: 40px 0 40px 0;
+}
+
+.cards__row {
+    padding: 0 0 40px 0;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

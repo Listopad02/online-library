@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useState, useEffect } from 'react'
 import { Input, Select } from 'antd';
 import { getBooks } from '../../services/books';
 import { useAppDispatch } from '../../store/hooks';
@@ -7,10 +7,12 @@ import "./Header.scss"
 
 const Header: FC = () => {
   const { Search } = Input
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
+  const [category, setCategory] = useState('newest')
+  const [sortBy, setSortBy] = useState('all')
 
   const handleSearch = (value: string) => {
-    getBooks({ q: value, maxResults: 30, key: 'AIzaSyDYSwzuICwD2H47mJrPOAmC5rby3aX2h14' })
+    getBooks({ q: sortBy === 'all' ? value : `${value}+subject:${sortBy}`, orderBy: category, maxResults: 30, key: 'AIzaSyDYSwzuICwD2H47mJrPOAmC5rby3aX2h14' })
       .then(response => dispatch(setBooks(response.data)))
   }
 
@@ -34,7 +36,7 @@ const Header: FC = () => {
               { value: 'newest', label: 'newest' },
               { value: 'relevance', label: 'relevance' },
             ]}
-
+            onChange={(value) => setCategory(value)}
           />
         </div>
         <div className="header__selects-item">
@@ -51,6 +53,7 @@ const Header: FC = () => {
               { value: 'medical', label: 'medical' },
               { value: 'poetry', label: 'poetry' },
             ]}
+            onChange={(value) => setSortBy(value)}
           />
         </div>
       </div>

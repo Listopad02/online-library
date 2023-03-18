@@ -1,22 +1,30 @@
 import axios, { AxiosResponse, AxiosInstance } from "axios";
+import qs from 'qs'
 
 const BASE_URL = "/api/"
 
-/**
- * Создать http запрос с параметрами
- */
-export const authHttp = (contentType?: string): AxiosInstance => {
+const paramsSerializer = (params: object) => {
+    return qs.stringify(params).replace(/%2B/gi, '+').replace(/%3A/gi, ':')
+};
+
+export const authHttp = (): AxiosInstance => {
 
     const ax = axios.create({
-        baseURL: BASE_URL,
+        headers: {'content-type': 'application/x-www-form-urlencoded'},
+        baseURL: BASE_URL
     })
 
     return ax
 }
 
-/** Вызвать get метод API. */
 export const queryGet = <R extends unknown>(
     method: string,
     args?: unknown
 ): Promise<AxiosResponse<R>> =>
-    authHttp().get(method, { params: args })
+authHttp().get(method, { params: args, paramsSerializer: { serialize: paramsSerializer } })
+    // authHttp().get(method, {
+    //     params: args,
+    //     paramsSerializer: params => {
+    //         return qs.stringify(params)
+    //     }
+    // })
