@@ -1,13 +1,17 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { Input, Select } from 'antd';
 import { getBooks } from '../../services/books';
+import { useAppDispatch } from '../../store/hooks';
+import { setBooks } from '../../store/booksSlice';
 import "./Header.scss"
 
 const Header: FC = () => {
   const { Search } = Input
+  const dispatch = useAppDispatch();
+
   const handleSearch = (value: string) => {
     getBooks({ q: value, maxResults: 30, key: 'AIzaSyDYSwzuICwD2H47mJrPOAmC5rby3aX2h14' })
-      .then(response => console.log(response.data))
+      .then(response => dispatch(setBooks(response.data)))
   }
 
   return (
@@ -30,6 +34,7 @@ const Header: FC = () => {
               { value: 'newest', label: 'newest' },
               { value: 'relevance', label: 'relevance' },
             ]}
+
           />
         </div>
         <div className="header__selects-item">
