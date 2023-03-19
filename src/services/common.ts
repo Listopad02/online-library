@@ -22,9 +22,3 @@ export const queryGet = <R extends unknown>(
     args?: unknown
 ): Promise<AxiosResponse<R>> =>
 authHttp().get(method, { params: args, paramsSerializer: { serialize: paramsSerializer } })
-    // authHttp().get(method, {
-    //     params: args,
-    //     paramsSerializer: params => {
-    //         return qs.stringify(params)
-    //     }
-    // })

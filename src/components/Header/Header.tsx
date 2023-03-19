@@ -1,19 +1,22 @@
 import { FC, useState, useEffect } from 'react'
 import { Input, Select } from 'antd';
 import { getBooks } from '../../services/books';
-import { useAppDispatch } from '../../store/hooks';
-import { setBooks } from '../../store/booksSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setBooks, setLoading } from '../../store/booksSlice';
 import "./Header.scss"
 
 const Header: FC = () => {
-  const { Search } = Input
   const dispatch = useAppDispatch()
+  const { Search } = Input
   const [category, setCategory] = useState('newest')
   const [sortBy, setSortBy] = useState('all')
+  const [value, setValue] = useState('')
+  const startIndex = useAppSelector(state => state.books.startIndex)
 
-  const handleSearch = (value: string) => {
-    getBooks({ q: sortBy === 'all' ? value : `${value}+subject:${sortBy}`, orderBy: category, maxResults: 30, key: 'AIzaSyDYSwzuICwD2H47mJrPOAmC5rby3aX2h14' })
+  const handleSearch = () => {
+    getBooks({ q: sortBy === 'all' ? value : `${value}+subject:${sortBy}`, orderBy: category, startIndex: startIndex, maxResults: 30, key: 'AIzaSyDYSwzuICwD2H47mJrPOAmC5rby3aX2h14' })
       .then(response => dispatch(setBooks(response.data)))
+    dispatch(setLoading(true))
   }
 
   return (
@@ -21,7 +24,8 @@ const Header: FC = () => {
       <h1>Online Google Library</h1>
       <div className="header__inputForm">
         <Search 
-          placeholder="Example: TypeScript" 
+          placeholder="Example: TypeScript"
+          onChange={e => setValue(e.target.value)} 
           onSearch={handleSearch} 
           enterButton 
         />

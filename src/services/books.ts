@@ -8,7 +8,8 @@ export type GetQueryOptions = {
     orderBy: string,
     maxResults: number,
     key: string,
-    q: string
+    q: string,
+    startIndex: number
 }
 
 export const getBooks = (

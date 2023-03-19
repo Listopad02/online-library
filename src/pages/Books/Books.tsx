@@ -1,6 +1,5 @@
-import React from "react"
+import React, { FC } from "react"
 
-// Тут книги
-export const Books = () => {
+export const Books: FC = () => {
     return <div>Books</div>
 }
