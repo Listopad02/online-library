@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import "./BookInfo.scss"
 import { useAppSelector } from '../../store/hooks';
 import dompurify from 'dompurify';
+import "./BookInfo.scss"
 
 const BookInfo: FC = () => {
   const book = useAppSelector(state => state.books.book)

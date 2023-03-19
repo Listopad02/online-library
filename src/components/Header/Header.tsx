@@ -3,11 +3,14 @@ import { Input, Select } from 'antd';
 import { getBooks } from '../../services/books';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { setBooks, setLoading, setInputValue, setCategory, setSortBy } from '../../store/booksSlice';
+import { useNavigate } from 'react-router-dom';
 import "./Header.scss"
 
 const Header: FC = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const { Search } = Input
+  const key = process.env.REACT_APP_API_KEY
 
   const startIndex = useAppSelector(state => state.books.startIndex)
   const inputValue = useAppSelector(state => state.books.inputValue)
@@ -15,9 +18,15 @@ const Header: FC = () => {
   const sortBy = useAppSelector(state => state.books.sortBy)
 
   const handleSearch = () => {
-    getBooks({ q: sortBy === 'all' ? inputValue : `${inputValue}+subject:${sortBy}`, orderBy: category, startIndex: startIndex, maxResults: 30, key: 'AIzaSyDYSwzuICwD2H47mJrPOAmC5rby3aX2h14' })
-      .then(response => dispatch(setBooks(response.data)))
-    dispatch(setLoading(true))
+    if (inputValue !== '') {
+      getBooks({ q: sortBy === 'all' ? inputValue : `${inputValue}+subject:${sortBy}`, orderBy: category, startIndex: startIndex, maxResults: 30, key: key })
+        .then(response => {
+          dispatch(setLoading(false))
+          dispatch(setBooks(response.data))
+        })
+      dispatch(setLoading(true))
+      navigate('/')
+    }
   }
 
   return (

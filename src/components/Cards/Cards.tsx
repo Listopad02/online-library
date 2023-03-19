@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { setLoading, setStartIndex, setBooksMore, setBook } from '../../store/booksSlice';
+import { setLoading, setInputValue, setStartIndex, setBooksMore, setBook } from '../../store/booksSlice';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
@@ -19,6 +19,7 @@ const Cards: FC = () => {
   const sortBy = useAppSelector(state => state.books.sortBy)
   const dispatch = useAppDispatch()
   const { Text } = Typography;
+  const key = process.env.REACT_APP_API_KEY
 
   useEffect(() => {
     if (books.items || books.totalItems === 0) dispatch(setLoading(false))
@@ -36,8 +37,8 @@ const Cards: FC = () => {
 
   const paginateResult = () => {
     dispatch(setStartIndex())
-    getBooks({ q: sortBy === 'all' ? inputValue : `${inputValue}+subject:${sortBy}`, orderBy: category, startIndex: startIndex, maxResults: 30, key: 'AIzaSyDYSwzuICwD2H47mJrPOAmC5rby3aX2h14' })
-      .then(response => dispatch(setBooksMore(response.data)))
+      getBooks({ q: sortBy === 'all' ? inputValue : `${inputValue}+subject:${sortBy}`, orderBy: category, startIndex: startIndex, maxResults: 30, key: key })
+        .then(response => dispatch(setBooksMore(response.data)))
   }
 
   return (
@@ -67,7 +68,7 @@ const Cards: FC = () => {
                             src={item.volumeInfo.imageLinks.thumbnail}
                             alt={item.volumeInfo.title}
                           />
-                        ) : 'No Picture'
+                        ) : <p>No Picture</p>
                       }
                     </div>
                     <div className="cards__card-body">

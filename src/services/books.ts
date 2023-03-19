@@ -7,7 +7,7 @@ export type GetQueryOptions = {
     $orderby?: string,
     orderBy: string,
     maxResults: number,
-    key: string,
+    key: string | undefined,
     q: string,
     startIndex: number
 }
