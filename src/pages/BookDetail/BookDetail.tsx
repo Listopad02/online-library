@@ -1,6 +1,12 @@
-import React from "react"
+import { FC } from "react"
+import BookInfo from "../../components/BookInfo/BookInfo"
+import Header from "../../components/Header/Header"
 
-// тут детальное описание книги
-export const BookDetail = () => {
-    return <div>BookDetail</div>
+export const BookDetail: FC = () => {
+  return (
+    <>
+      <Header />
+      <BookInfo />
+    </>
+  )
 }

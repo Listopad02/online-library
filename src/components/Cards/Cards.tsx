@@ -1,9 +1,12 @@
 import { FC, useEffect } from 'react'
-import { setLoading, setStartIndex, setBooks } from '../../store/booksSlice';
+import { setLoading, setStartIndex, setBooksMore, setBook } from '../../store/booksSlice';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { getBooks } from '../../services/books';
+import { getBooks, getBook } from '../../services/books';
+import { Link } from "react-router-dom";
+import { Typography } from 'antd';
+import { Item } from '../../store/types';
 import Loader from '../Loader/Loader';
 import "./Cards.scss"
 
@@ -15,6 +18,7 @@ const Cards: FC = () => {
   const category = useAppSelector(state => state.books.category)
   const sortBy = useAppSelector(state => state.books.sortBy)
   const dispatch = useAppDispatch()
+  const { Text } = Typography;
 
   useEffect(() => {
     if (books.items || books.totalItems === 0) dispatch(setLoading(false))
@@ -33,7 +37,7 @@ const Cards: FC = () => {
   const paginateResult = () => {
     dispatch(setStartIndex())
     getBooks({ q: sortBy === 'all' ? inputValue : `${inputValue}+subject:${sortBy}`, orderBy: category, startIndex: startIndex, maxResults: 30, key: 'AIzaSyDYSwzuICwD2H47mJrPOAmC5rby3aX2h14' })
-      .then(response => dispatch(setBooks(response.data)))
+      .then(response => dispatch(setBooksMore(response.data)))
   }
 
   return (
@@ -47,7 +51,14 @@ const Cards: FC = () => {
             {books.items?.map((item, i) => {
               return (
                 // есть книги с неуникальными ключами
-                <div key={item.id + i} className="cards__col">
+                <Link 
+                  to={"BookDetail/" + item.id} 
+                  key={item.id + i} 
+                  className="cards__col"
+                  onClick={() => getBook(item.id)
+                    .then(response => dispatch(setBook(response.data as Item)))
+                  }
+                >
                   <div className="cards__card">
                     <div className="cards__card-img">
                       {
@@ -60,12 +71,23 @@ const Cards: FC = () => {
                       }
                     </div>
                     <div className="cards__card-body">
-                      <p className='cards__body-category'>{item.volumeInfo.categories ? item.volumeInfo.categories[0] : null}</p>
-                      <p className='cards__body-title'>{item.volumeInfo.title || null}</p>
-                      <p className='cards__body-authors'>{item.volumeInfo.authors?.join(', ') || null}</p>
+                      <p className='cards__body-category'>
+                        {item.volumeInfo.categories ? item.volumeInfo.categories[0] : null}
+                      </p>
+                      <Text 
+                        ellipsis={{
+                          tooltip: item.volumeInfo.title
+                        }}
+                        className='cards__body-title'
+                      >
+                        {item.volumeInfo.title || null}
+                      </Text>
+                      <p className='cards__body-authors'>
+                        {item.volumeInfo.authors?.join(', ') || null}
+                      </p>
                     </div>
                   </div>
-                </div>
+                </Link>
               )
             })}
           </div>

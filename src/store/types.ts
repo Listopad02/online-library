@@ -12,7 +12,7 @@ export interface Item {
     volumeInfo: VolumeInfo
     saleInfo: SaleInfo
     accessInfo: AccessInfo
-    searchInfo: SearchInfo
+    searchInfo?: SearchInfo
 }
     
 export interface VolumeInfo {
@@ -32,6 +32,7 @@ export interface VolumeInfo {
     canonicalVolumeLink: string
     categories: string[]
     authors: string[]
+    description: string
 }
     
 export interface ReadingModes {
@@ -84,4 +85,8 @@ export interface IBooksInfo {
     kind?: string
     totalItems?: number
     items?: Item[]
+}
+
+export interface IBookInfo {
+    book: Item
 }

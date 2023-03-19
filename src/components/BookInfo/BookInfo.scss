@@ -1,0 +1,43 @@
+.bookInfo {
+    display: flex;
+    
+
+    .bookInfo__item {
+        padding: 30px;
+
+        &:first-child {
+            background-color: rgb(250, 246, 246);
+        }
+
+        img {
+            box-shadow: 4px 4px 12px 6px rgba(34, 60, 80, 0.2);
+            width: 50%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .bookInfo__item-category {
+            color: #7e7e7e;
+            padding: 0 0 20px 0;
+        }
+
+        .bookInfo__item-authors {
+            color: #7e7e7e;
+            text-decoration: underline;
+        }
+
+        div {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    }
+
+    .image {
+        width: 40%;
+        display: flex;
+        align-items: center;
+    }
+    .text {
+        width: 60%;
+    }
+}

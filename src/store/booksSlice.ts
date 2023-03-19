@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import { IBooksInfo } from './types'
+import { IBooksInfo, Item } from './types'
 
 interface IBooksState {
   booksInfo: IBooksInfo,
@@ -8,7 +8,8 @@ interface IBooksState {
   startIndex: number,
   inputValue: string,
   category: string,
-  sortBy: string
+  sortBy: string,
+  book: Item | null
 }
 
 const initialState: IBooksState = {
@@ -17,7 +18,8 @@ const initialState: IBooksState = {
   startIndex: 0,
   inputValue: '',
   category: 'newest',
-  sortBy: 'all'
+  sortBy: 'all',
+  book: null
 }
 
 export const booksSlice = createSlice({
@@ -42,9 +44,19 @@ export const booksSlice = createSlice({
     setSortBy: (state, action: PayloadAction<string>) => {
       state.sortBy = action.payload
     },
+    setBooksMore: (state, action: PayloadAction<IBooksInfo>) => {
+      state.booksInfo = {
+        ...state.booksInfo,
+        items: state.booksInfo.items?.concat(action.payload.items!)
+      }
+    },
+    setBook: (state, action: PayloadAction<Item>) => {
+      state.book = action.payload
+    },
   },
 })
 
 export const { setBooks, setLoading, setStartIndex, 
-               setInputValue, setCategory, setSortBy } = booksSlice.actions
+               setInputValue, setCategory, setSortBy, 
+               setBooksMore, setBook } = booksSlice.actions
 export default booksSlice.reducer
