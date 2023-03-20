@@ -23,11 +23,12 @@ const BookInfo: FC = () => {
         <Loader /> :
         <>
           <div className="bookInfo__item image">
-          <img 
-            src={book?.volumeInfo.imageLinks?.thumbnail ? 
-                  book?.volumeInfo.imageLinks.thumbnail : 
-                  'https://books.google.com/books/content?id=xsXnngEACAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'} 
-            alt={book?.volumeInfo.title} />
+            <img 
+              src={book?.volumeInfo.imageLinks?.thumbnail ? 
+                    book?.volumeInfo.imageLinks.thumbnail : 
+                    'https://books.google.com/books/content?id=xsXnngEACAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'} 
+              alt={book?.volumeInfo.title} 
+            />
           </div>
           <div className="bookInfo__item text">
             <p className='bookInfo__item-category'>{book?.volumeInfo.categories?.join(' / ') || null}</p>
