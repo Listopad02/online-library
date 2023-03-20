@@ -38,6 +38,7 @@ const Header: FC = () => {
           onChange={e => dispatch(setInputValue(e.target.value))} 
           onSearch={handleSearch} 
           enterButton 
+          value={inputValue}
         />
       </div>
       <div className="header__selects">

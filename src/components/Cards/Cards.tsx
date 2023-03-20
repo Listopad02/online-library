@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react'
-import { setLoading, setInputValue, setStartIndex, setBooksMore, setBook } from '../../store/booksSlice';
+import { setLoading, setStartIndex, setBooksMore, setBook } from '../../store/booksSlice';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
@@ -23,6 +23,7 @@ const Cards: FC = () => {
 
   useEffect(() => {
     if (books.items || books.totalItems === 0) dispatch(setLoading(false))
+    dispatch(setBook(null as any))
   }, [books.items, books.totalItems, dispatch])
 
   const handleResult = () => {
@@ -62,14 +63,7 @@ const Cards: FC = () => {
                 >
                   <div className="cards__card">
                     <div className="cards__card-img">
-                      {
-                        item.volumeInfo.imageLinks?.thumbnail ? (
-                          <img
-                            src={item.volumeInfo.imageLinks.thumbnail}
-                            alt={item.volumeInfo.title}
-                          />
-                        ) : <p>No Picture</p>
-                      }
+                    <img src={item?.volumeInfo.imageLinks?.thumbnail ? item?.volumeInfo.imageLinks.thumbnail : 'https://books.google.com/books/content?id=xsXnngEACAAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'} alt={item?.volumeInfo.title} />
                     </div>
                     <div className="cards__card-body">
                       <p className='cards__body-category'>
