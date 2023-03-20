@@ -10,7 +10,9 @@ const paramsSerializer = (params: object) => {
 export const authHttp = (): AxiosInstance => {
 
     const ax = axios.create({
-        headers: {'content-type': 'application/x-www-form-urlencoded'},
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded'
+        },
         baseURL: BASE_URL
     })
 
